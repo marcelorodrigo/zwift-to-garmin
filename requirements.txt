@@ -1,8 +1,26 @@
+annotated-types==0.7.0
+bitstruct==8.11.1
+certifi==2024.12.14
+charset-normalizer==3.4.1
+et_xmlfile==2.0.0
 fit-tool==0.9.13
 fitparse==1.2.0
 garminconnect==0.2.25
+garth==0.5.2
+idna==3.10
+jdcal==1.4.1
+lxml==5.3.0
+oauthlib==3.2.2
+openpyxl==2.5.12
 # zwift-client is getting old and is tied to ancient protobuf version
 # @see https://protobuf.dev/news/2022-05-06/#python-updates
 protobuf==3.20.3
+pydantic==2.10.4
+pydantic_core==2.27.2
+python-dotenv==1.0.1
 requests==2.32.3
+requests-oauthlib==2.0.0
+typing_extensions==4.12.2
+urllib3==2.3.0
+withings-sync==4.2.5
 zwift-client==0.2.0
