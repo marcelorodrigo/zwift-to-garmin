@@ -1,0 +1,6 @@
+fit-tool==0.9.13
+fitparse==1.2.0
+garminconnect==0.2.25
+protobuf==3.20.3
+requests==2.32.3
+zwift-client==0.2.0
