@@ -31,7 +31,7 @@ It also modifies the `.fit` file to set the device manufacturer and type using t
 Run the main script :smile:
 
 ```sh
-python main.py
+python3 main.py
 ```
 
 ## License
