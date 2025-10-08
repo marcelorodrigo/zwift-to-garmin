@@ -57,7 +57,7 @@ class ActivityProcessor:
             return True
 
         except Exception as e:
-            self.logger.error(f"Activity processing failed: {e}")
+            self.logger.exception(f"Activity processing failed")
             return False
 
         finally:
