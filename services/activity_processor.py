@@ -56,7 +56,7 @@ class ActivityProcessor:
             self.logger.debug(f"Upload response: {response}")
             return True
 
-        except Exception as e:
+        except Exception:
             self.logger.exception(f"Activity processing failed")
             return False
 
