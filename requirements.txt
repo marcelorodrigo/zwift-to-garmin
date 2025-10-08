@@ -4,5 +4,12 @@ garminconnect==0.2.25
 # zwift-client is getting old and is tied to ancient protobuf version
 # @see https://protobuf.dev/news/2022-05-06/#python-updates
 protobuf==3.20.3
-requests==2.32.3
+requests==2.32.4
 zwift-client==0.2.0
+python-dotenv==1.0.0
+
+# Testing dependencies
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+responses==0.24.1
