@@ -1,5 +1,6 @@
 """Main entry point for Zwift to Garmin activity transfer."""
 
+import sys
 import os
 import logging
 from dotenv import load_dotenv
@@ -44,7 +45,7 @@ def main():
         print("✅ Activity successfully transferred from Zwift to Garmin!")
     else:
         print("❌ Failed to transfer activity. Check the logs for details.")
-        exit(1)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
