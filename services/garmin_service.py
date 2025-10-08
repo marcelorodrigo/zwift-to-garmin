@@ -77,8 +77,8 @@ class GarminService:
             self.logger.debug(f"Upload response: {response}")
             return response
         except Exception as e:
-            self.logger.error(f"Failed to upload activity: {e}")
-            raise RuntimeError(f"Upload failed: {e}")
+            self.logger.exception(f"Failed to upload activity: {e}")
+            raise RuntimeError(f"Upload failed: {e}") from e
 
     def is_authenticated(self) -> bool:
         """Check if the service is authenticated.
