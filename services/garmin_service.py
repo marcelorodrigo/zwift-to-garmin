@@ -42,17 +42,17 @@ class GarminService:
             self._authenticated = True
             self.logger.info("Successfully authenticated with Garmin Connect")
         except GarminConnectAuthenticationError:
-            self.logger.error("Authentication error. Check your credentials.")
+            self.logger.exception("Authentication error. Check your credentials.")
             raise
         except GarminConnectTooManyRequestsError:
-            self.logger.error("Too many requests. Try again later.")
+            self.logger.exception("Too many requests. Try again later.")
             raise
         except GarminConnectConnectionError:
-            self.logger.error("Connection error. Check your internet connection.")
+            self.logger.exception("Connection error. Check your internet connection.")
             raise
         except Exception as e:
-            self.logger.error(f"Failed to login to Garmin Connect: {e}")
-            raise RuntimeError(f"Authentication failed: {e}")
+            self.logger.exception(f"Failed to login to Garmin Connect: {e}")
+            raise RuntimeError(f"Authentication failed: {e}") from e
 
     def upload_activity(self, fit_file_path: str) -> Dict[str, Any]:
         """Upload a .fit file to Garmin Connect.
