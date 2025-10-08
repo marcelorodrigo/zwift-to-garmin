@@ -76,7 +76,7 @@ class FitFileService:
             return modified_fit_file_path
 
         except Exception as e:
-            raise RuntimeError(f"Failed to modify FIT file: {e}")
+            raise RuntimeError(f"Failed to modify FIT file: {e}") from e
 
     def cleanup_file(self, file_path: str) -> None:
         """Clean up a temporary file.
