@@ -56,10 +56,10 @@ class ZwiftService:
         self.logger.info(f"Download link: {link}")
 
         try:
-            response = requests.get(link)
+            response = requests.get(link, timeout=10)
             response.raise_for_status()
         except requests.RequestException as e:
-            raise RuntimeError(f"Failed to download activity: {e}")
+            raise RuntimeError(f"Failed to download activity: {e}") from e
 
         # Save the .fit file to a temporary location
         temp_dir = tempfile.gettempdir()
