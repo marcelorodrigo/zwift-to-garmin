@@ -103,7 +103,7 @@ pytest --cov=services --cov-report=html --cov-report=term-missing
 
 ## 🏃‍♂️ CI/CD
 
-The project includes a GitHub Actions workflow (`.github/workflows/ci.yml`) that:
+The project includes a GitHub Actions workflow (`.github/workflows/build.yml`) that:
 
 - **Multi-Python Testing**: Tests against Python 3.9, 3.10, 3.11, and 3.12
 - **Code Quality**: Runs flake8 linting
