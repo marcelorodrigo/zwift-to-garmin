@@ -9,7 +9,7 @@ zwift-client==0.2.0
 python-dotenv==1.1.1
 
 # Testing dependencies
-pytest==7.4.3
-pytest-cov==4.1.0
+pytest==8.4.2
+pytest-cov==7.0.0
 pytest-mock==3.12.0
 responses==0.24.1
