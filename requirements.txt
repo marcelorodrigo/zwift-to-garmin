@@ -1,6 +1,6 @@
 fit-tool==0.9.13
 fitparse==1.2.0
-garminconnect==0.2.30
+garminconnect==0.2.36
 # zwift-client is getting old and is tied to ancient protobuf version
 # @see https://protobuf.dev/news/2022-05-06/#python-updates
 protobuf==3.20.3
