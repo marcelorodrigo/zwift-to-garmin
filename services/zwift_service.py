@@ -5,7 +5,7 @@ import tempfile
 import requests
 import logging
 from typing import Optional, Dict, Any
-from zwift import Client as ZwiftClient
+from services.zwift import ZwiftClient
 
 
 class ZwiftService:

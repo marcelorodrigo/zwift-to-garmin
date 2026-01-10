@@ -1,174 +1,119 @@
 # Zwift to Garmin Activity Transfer
 
-A Python application that automatically transfers cycling activities from Zwift to Garmin Connect with proper device spoofing to ensure compatibility.
+A robust and fully open-source Python application that automatically transfers cycling activities from Zwift to Garmin Connect—including device spoofing for seamless compatibility.
 
-## 🏗️ Architecture
+---
 
-The application follows a clean, service-oriented architecture with clear separation of concerns:
+## 🚦 Features
 
-### Service Classes
+- **Modern Zwift API Client** — No legacy dependencies, no zwift-client, zero protobuf required.
+- **Service-Oriented Architecture** — Modular, testable, single-responsibility Python services.
+- **Device Spoofing** — Activities appear as if from a real Garmin Edge.
+- **Comprehensive Test Coverage** — All modules covered; easy to run and expand tests.
+- **.env & Security** — All credentials handled securely via environment variables.
+- **Robust Error Handling** — Clean and descriptive logging for all API and file ops.
 
-#### 1. **ZwiftService** (`services/zwift_service.py`)
-- **Responsibility**: Handles Zwift authentication and activity downloads
-- **Key Methods**:
-  - `authenticate()` - Authenticates with Zwift API
-  - `download_last_activity()` - Downloads the most recent activity as a FIT file
+---
 
-#### 2. **FitFileService** (`services/fit_file_service.py`)
-- **Responsibility**: Manages FIT file modifications for device spoofing
-- **Key Methods**:
-  - `modify_device_info()` - Changes device manufacturer/product info
-  - `cleanup_file()` - Removes temporary files
+## 🛠️ Project Structure
 
-#### 3. **GarminService** (`services/garmin_service.py`)
-- **Responsibility**: Handles Garmin Connect authentication and uploads
-- **Key Methods**:
-  - `authenticate()` - Authenticates with Garmin Connect
-  - `upload_activity()` - Uploads FIT file to Garmin Connect
-
-#### 4. **ActivityProcessor** (`services/activity_processor.py`)
-- **Responsibility**: Orchestrates the complete workflow using dependency injection
-- **Key Methods**:
-  - `process_latest_activity()` - Executes the full transfer pipeline
-
-## 🚀 Features
-
-- **Clean Architecture**: Each service has a single responsibility
-- **Dependency Injection**: Services are loosely coupled and easily testable
-- **Comprehensive Error Handling**: Proper exception handling throughout
-- **Extensive Testing**: 97% test coverage with 39 test cases
-- **CI/CD Pipeline**: Automated testing on GitHub Actions
-- **Device Spoofing**: Modifies FIT files to appear as Garmin Edge devices
-
-## 📦 Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd zwift-to-garmin
+```
+services/
+├─ zwift/              # Modern modular Zwift API client (auth, activities, requests, etc)
+├─ zwift_service.py    # Downloads activities from Zwift
+├─ fit_file_service.py # Device spoofing and file mangling
+├─ garmin_service.py   # Uploads to Garmin Connect
+├─ activity_processor.py  # Orchestrates full Zwift→Garmin workflow
+main.py                # CLI entry point
 ```
 
-2. Create a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+Tests: See `tests/`, with tests for every service and API.
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+---
 
-4. Create a `.env` file with your credentials:
-```env
-ZWIFT_USERNAME=your_zwift_username
-ZWIFT_PASSWORD=your_zwift_password
-GARMIN_USERNAME=your_garmin_username
-GARMIN_PASSWORD=your_garmin_password
-```
+## ⏬ Installation
 
-## 🔧 Usage
+1. **Clone and enter project directory:**
+   ```bash
+   git clone <repository-url>
+   cd zwift-to-garmin
+   ```
 
-Run the application:
+2. **Set up a virtual environment:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install required dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment:**
+   Create a `.env` file with Zwift and Garmin credentials:
+   ```dotenv
+   ZWIFT_USERNAME=your_zwift_username
+   ZWIFT_PASSWORD=your_zwift_password
+   GARMIN_USERNAME=your_garmin_username
+   GARMIN_PASSWORD=your_garmin_password
+   ```
+
+---
+
+## 🚀 Usage
+
 ```bash
 python main.py
 ```
 
-The application will:
-1. Authenticate with Zwift and download your latest activity
-2. Modify the FIT file to spoof device information (appears as Garmin Edge 530)
-3. Upload the modified activity to Garmin Connect
-4. Clean up temporary files
+- Downloads your latest Zwift activity (after authenticating).
+- Modifies the FIT file to spoof device info (mimics a Garmin Edge).
+- Uploads the activity to Garmin Connect.
+- Cleans up all temp files.
+
+---
 
 ## 🧪 Testing
 
-The project includes comprehensive testing with pytest:
+Run the whole suite:
 
-### Run all tests:
 ```bash
-pytest
+pytest -v
 ```
 
-### Run tests with coverage:
+For coverage:
+
 ```bash
-pytest --cov=services --cov-report=html --cov-report=term-missing
+pytest --cov=services --cov-report=html
 ```
 
-### Test Structure:
-- `tests/test_zwift_service.py` - Tests for Zwift integration
-- `tests/test_fit_file_service.py` - Tests for FIT file processing
-- `tests/test_garmin_service.py` - Tests for Garmin integration
-- `tests/test_activity_processor.py` - Tests for workflow orchestration
-- `tests/test_main.py` - Tests for main entry point
+**Test structure:**  
+All major services and features have their dedicated test files under `tests/`.
 
-## 🏃‍♂️ CI/CD
+---
 
-The project includes a GitHub Actions workflow (`.github/workflows/build.yml`) that:
+## 📚 Key Services & Public APIs
 
-- **Multi-Python Testing**: Tests against Python 3.9, 3.10, 3.11, and 3.12
-- **Code Quality**: Runs flake8 linting
-- **Test Coverage**: Generates coverage reports
-- **Security Scanning**: Uses safety and bandit for security checks
-- **Dependency Caching**: Optimizes build times
+- `ZwiftService`: Authenticates and downloads activities from Zwift (see `services/zwift/` for modular API).
+- `FitFileService`: Modifies and cleans up FIT files.
+- `GarminService`: Authenticates and uploads activities to Garmin Connect.
+- `ActivityProcessor`: Orchestrates the full process.
 
-### Workflow Triggers:
-- Push to `main` or `develop` branches
-- Pull requests to `main` or `develop` branches
+**The Zwift API client is a brand-new, fully modular implementation; no legacy or 3rd-party zwift-client or protobuf required.**
 
-## 🛠️ Development
-
-### Adding New Features:
-1. Create service classes following the single responsibility principle
-2. Add comprehensive unit tests
-3. Use dependency injection for loose coupling
-4. Follow the existing error handling patterns
-
-### Testing Best Practices:
-- Mock external dependencies (APIs, file system)
-- Test both success and failure scenarios
-- Use descriptive test names and docstrings
-- Maintain high test coverage (>95%)
-
-## 📋 Dependencies
-
-### Core Dependencies:
-- `fit-tool` - FIT file manipulation
-- `garminconnect` - Garmin Connect API integration
-- `zwift-client` - Zwift API integration
-- `requests` - HTTP client
-- `python-dotenv` - Environment variable management
-
-### Testing Dependencies:
-- `pytest` - Testing framework
-- `pytest-cov` - Coverage reporting
-- `pytest-mock` - Mocking utilities
-- `responses` - HTTP response mocking
+---
 
 ## 🔒 Security
 
-- Credentials are managed via environment variables
-- No sensitive data is logged or stored
-- Dependencies are scanned for vulnerabilities
-- Code is analyzed with security linting tools
+- Credentials *never* logged or saved; use `.env`.
+- All dependencies are up-to-date and scanned.
 
-## 📝 Error Handling
-
-Each service implements robust error handling:
-- **Authentication errors**: Clear error messages for invalid credentials
-- **Network errors**: Retry logic and connection error handling
-- **File errors**: Proper cleanup of temporary files
-- **API errors**: Specific handling for rate limits and service unavailability
+---
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
+1. Fork, branch, and develop new features as modular services.
+2. Add or update tests for all changes.
+3. Open a PR—CI/CD will verify tests and quality.
 
-The CI pipeline will automatically run tests and code quality checks on your PR.
-
-## 📄 License
-
-[Add your license information here]
