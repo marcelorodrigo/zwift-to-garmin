@@ -70,8 +70,8 @@ class TestZwiftProfile:
         )
         _1 = profile_me.profile
         _2 = profile_me.profile
-        me_calls = [c for c in responses.calls if c.request.url.endswith("/api/profiles/me")]
-        id_calls = [c for c in responses.calls if c.request.url.endswith("/api/profiles/23131")]
+        me_calls = [c for c in responses.calls if c.request.url and c.request.url.endswith("/api/profiles/me")]
+        id_calls = [c for c in responses.calls if c.request.url and c.request.url.endswith("/api/profiles/23131")]
         # Only 1 call for /me, but 2 for profile fetch
         assert len(me_calls) == 1
         assert len(id_calls) == 2
