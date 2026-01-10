@@ -5,6 +5,7 @@ A modern Python client for the Zwift API that replaces the legacy zwift-client l
 Modules:
     auth: OAuth authentication and token management
     request: Authenticated HTTP requests
+    player_resource: Base class for player-specific resources
     profile: Player profile information
     activities: Player activity data
     client: Main client orchestration

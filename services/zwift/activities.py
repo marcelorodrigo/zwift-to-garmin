@@ -3,12 +3,12 @@
 Provides access to player activity data.
 """
 
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List
 
-from services.zwift.request import ZwiftApiRequest
+from services.zwift.player_resource import ZwiftPlayerResource
 
 
-class ZwiftActivities:
+class ZwiftActivities(ZwiftPlayerResource):
     """Provides access to Zwift activity data."""
 
     def __init__(self, player_id: str, get_access_token: Callable[[], str]):
@@ -18,27 +18,7 @@ class ZwiftActivities:
             player_id: Player ID or "me" for authenticated user
             get_access_token: Callable that returns a valid access token
         """
-        self._player_id = player_id
-        self._request = ZwiftApiRequest(get_access_token)
-        self._resolved_player_id: Optional[str] = None
-
-    def _get_player_id(self) -> str:
-        """Get the resolved player ID, fetching from API if needed.
-
-        Returns:
-            The numeric player ID
-        """
-        if self._resolved_player_id:
-            return self._resolved_player_id
-
-        if self._player_id != "me":
-            self._resolved_player_id = self._player_id
-            return self._player_id
-
-        # Resolve "me" to actual player ID
-        profile_data = self._request.get_json("/api/profiles/me")
-        self._resolved_player_id = str(profile_data["id"])
-        return self._resolved_player_id
+        super().__init__(player_id, get_access_token)
 
     def get_activities(self, start: int = 0, limit: int = 10) -> List[Dict[str, Any]]:
         """Get the player's activities.
