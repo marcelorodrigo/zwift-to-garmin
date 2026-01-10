@@ -67,7 +67,11 @@ class ZwiftApiRequest:
         try:
             response = requests.get(url, headers=headers, timeout=self.REQUEST_TIMEOUT)
             response.raise_for_status()
-            return response.json()
+            try:
+                return response.json()
+            except ValueError as decode_err:
+                snippet = response.text[:200].strip()  # Limit body preview
+                raise ZwiftApiError(f"API response not JSON-decodable (status={response.status_code}): {snippet}") from decode_err
         except requests.exceptions.HTTPError as e:
             raise ZwiftApiError(f"API request failed: {e.response.status_code} - {e.response.reason}") from e
         except requests.exceptions.RequestException as e:
