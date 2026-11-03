@@ -8,7 +8,7 @@ on:
 jobs:
   tests:
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
         with:
@@ -17,14 +17,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: 3.13.11
+          python-version-file: '.python-version'
           cache: pip
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests with pytest
         run: pytest --cov=services --cov-report=xml --cov-report=term-missing --junit-xml=test-results.xml
+      - name: Read Python version for Sonar
+        id: python-version
+        run: echo "minor=$(cut -d. -f1,2 .python-version)" >> "$GITHUB_OUTPUT"
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v8
+        with:
+          args: -Dsonar.python.version=${{ steps.python-version.outputs.minor }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
